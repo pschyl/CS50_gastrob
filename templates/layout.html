@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <title>gastrop: {% block title %}{% endblock %}</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script type="text/javascript" src="/static/js/script.js"></script>
+        <link href="/static/styles.css" rel="stylesheet">    
+    </head>
+
+
+    <body>
+
+        <header>
+            <nav>
+                {% if session["user_id"] %}
+                <ul class="nav-container3">
+                    <li class="nav-item3" id="logo"><a class="nav-link" href="/">gastrob</a></li>
+                    <li class="nav-item3"><a class="nav-link" href="/profil">profile</a></li>
+                    <li class="nav-item3"><a class="nav-link" href="/logout">logout</a></li>
+                </ul>
+                {% else %}
+                <ul class="nav-container3">
+                    <li class="nav-item3" id="logo"><a class="nav-link" href="/">gastrob</a></li>
+                    <li class="nav-item3"><a class="nav-link" href="/register">register</a></li>
+                    <li class="nav-item3"><a class="nav-link" href="/login">login</a></li>
+                </ul>
+                {% endif %}
+            </nav>
+            <div><img id="img_title" src="static/gastro8.jpg"></div>
+            
+            <ul class="nav-container1">
+                <li class="nav-item"><a class="nav-link" href="/rate"> . r a t e . </a></li>
+                <li class="nav-item"><a class="nav-link" href="/browse"> . b r o w s e . </a></li>
+                <li class="nav-item"><a class="nav-link" href="/stats"> . s t a t s . </a></li>
+            </ul>
+        
+        </header>
+
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+
+        <footer>
+            <div>
+                <ul class="nav-container2">
+                    <li class="nav-item2">Impressum</li>
+                    <li class="nav-item2">FAQ</li>
+                    <li class="nav-item2">Contact Us</li>
+                </ul>
+            </div>
+        </footer>
+
+    </body>
+
+</html>

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block main %}
+    <form class="register_form" action="/login" method="post">
+        <div class="register">
+            <input class="input2" id="log_username" name="username" placeholder="username" type="text">
+        </div>
+        <div class="register">
+            <input class="input2" id="log_password" name="password" placeholder="password" type="password">
+        </div>
+        <div class="register">
+            <input class="input3" id="log_submit" type="submit" value="Submit">
+        </div>
+    </form>
+{% endblock %}

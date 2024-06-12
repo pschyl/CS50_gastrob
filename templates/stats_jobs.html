@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Job Stats
+{% endblock %}
+
+{% block main %}
+<aside>
+    <ul class="profil_menu">
+        <li class="profil_item"><a href="/stats">User</a></li>
+        <li class="profil_item"><a href="/employerstats">Employer</a></li>
+        <li class="profil_item"><a href="/jobstats">Jobs</a></li>
+    </ul>
+</aside>
+<div class="profil_layout">
+    <div class="table_container">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Registrated Jobs</th>
+                    <th>{{ registrated_jobs }}</th>
+                </tr>
+                <tr>
+                    <th>Active Jobs</th>
+                    <th>{{ active_jobs}} </th>
+                </tr>
+                <tr>
+                    <th>Ratio of Workspaces</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Ratio of Positions</th>
+                    <th><canvas id="myChart4" style="width:100%; max-width: 400px"></canvas></th>
+                    <script>
+                        piechart("myChart4", {{ positions|tojson }}, {{ amount_position|tojson }});
+                    </script>    
+                </tr>
+                <tr>
+                    <th>Ratio of Employment Types</th>
+                    <th><canvas id="myChart5" style="width:100%; max-width: 400px"></canvas></th>
+                    <script>
+                        piechart("myChart5", {{ emp_types|tojson }}, {{ amount_types|tojson }});
+                    </script>  
+                </tr>
+                <tr>
+                    <th>Ratio of Responsibility</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Average Salary per Month</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Average Overtime per Month</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Average Tip per Month</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Average Rating</th>
+                    <th></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

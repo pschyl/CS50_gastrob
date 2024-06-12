@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Job
+{% endblock %}
+
+{% block main %}
+    <aside>
+        <ul class="profil_menu">
+            <li class="profil_item"><a href="/profil">Overview</a></li>
+            <li class="profil_item"><a href="/addjob">Add Job</a></li>
+            <li class="profil_item"><a href="/addemployer">Add Employer</a></li>
+            <li class="profil_item"><a href="/history">History</a></li>
+        </ul>
+    </aside>
+    <div class="profil_layout">
+        <div class="table_container">
+            <h3>
+                Add a Job
+            </h3>
+            <form action="/addjob" method="post">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Employer</th>
+                            <th>
+                                <select class="input1" name="employer_name" placeholder="Employer" required>
+                                    {% for row in employer %}
+                                    <option value="{{ row[0] }}">{{ row[0] }}</option>
+                                    {% endfor %}
+                            </th>
+                            <th><button class="input3" id="addempl"><a href="/addemployer" disabled>add Employer</a></button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Workspace</th>
+                            <th>
+                                <select class="input1" name="workspace" required>
+                                    <option value="Kitchen">Kitchen</option>
+                                    <option value="Service">Service</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Postion</th>
+                            <th>
+                                <select class="input1" name="position" required>
+                                    <option value="Chef">Chef</option>
+                                    <option value="Kitchen_assistant">Kitchen Assistant</option>
+                                    <option value="Dishwasher">Dishwasher</option>
+                                    <option value="Barkeeper">Barkeeper</option>
+                                    <option value="Waitor">Waitor</option>
+                                    <option value="Allrounder">Allrounder</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Employment Type</th>
+                            <th>
+                                <select class="input1" name="employment_type" required>
+                                    <option value="Minijob">Minijob</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Full_time">Full-Time</option>
+                                    <option value="Part_time">Part-Time</option>
+                                    <option value="Trainee">Trainee</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Responsibility</th>
+                            <th>
+                                <select class="input1" name="responsibility" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Salary per Month (in Euro)</th>
+                            <th><input class="input1" name="salary" placeholder="xxxxx.xx" type="number" required></th>
+                        </tr>
+                        <tr>
+                            <th>Start</th>
+                            <th><input class="input1" name="start" type="date" required></th>
+                        </tr>
+                        <tr>
+                            <th>End</th>
+                            <th><input class="input1" name="end" type="date"></th>
+                            <th class="explanation">(Leave empty if active)</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th><button class="input3" type="submit">Submit</button></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+    
+{% endblock %}

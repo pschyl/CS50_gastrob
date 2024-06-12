@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Browse
+{% endblock %}
+
+{% block main %}
+    <div class="register_form">
+        <h4 class="register">Browse for Employer</h4>
+        <form class="register" action="/browse" method="post">
+            <input class="input2" type="text" name="browse">
+            <button id="browse" class="input2">Browse</button>
+        </form>
+    </div>
+{% endblock %}

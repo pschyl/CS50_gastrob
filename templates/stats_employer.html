@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Employer Stats
+{% endblock %}
+
+{% block main %}
+<aside>
+    <ul class="profil_menu">
+        <li class="profil_item"><a href="/stats">User</a></li>
+        <li class="profil_item"><a href="/employerstats">Employer</a></li>
+        <li class="profil_item"><a href="/jobstats">Jobs</a></li>
+    </ul>
+</aside>
+<div class="profil_layout">
+    <div class="table_container">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Registrated Employer</th>
+                    <th>{{ amount_employer }}</th>
+                </tr>
+                <tr>
+                    <th>Ratio of Gastronomy Types</th>
+                    <th><canvas id="myChart3" style="width:100%; max-width: 400px"></canvas></th>
+                    <script>
+                        piechart("myChart3", {{ gastro_types|tojson }}, {{ gastro_types_amount|tojson }});
+                    </script>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

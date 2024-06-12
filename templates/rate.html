@@ -1,0 +1,158 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Rate
+{% endblock %}
+
+{% block main %}
+    <div>
+        <h3>Rate your Job</h3>
+        <div id="rate_ex">
+            You can rate an active job once each month. A job in the past only one time overall.
+        </div>
+        <form action="/rate" method="post">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Select the job you want to rate
+                        </th>
+                        <th>
+                            <select name="job" required>
+                                {% for job in jobs %}
+                                <option value="{{ job[2] }}">{{ job[0] }} ({{ job[1] }})</option>
+                                {% endfor %}
+                            </select>
+                        </th>
+                        <th><button class="input3" id="addlink" disabled><a href="/addjob">add Job</a></button></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Average Overtime per Month</th>
+                        <th>
+                            <input onclick="show('overtime_paid');" class="input1" id="overtime" name="overtime" placeholder="h/month" type="number">
+                        </th>
+                    </tr>
+                    <tr id="overtime_paid" style="display: none;">
+                        <th class="showed">Reliably paid?</th>
+                        <th class="showed">
+                            <select name="paid">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Average Tip per Month</th>
+                        <th>
+                            <input onclick="show('tip_distribution');" class="input1" id="tip" name="tip" placeholder="€/month" type="number">
+                        </th>
+                    </tr>
+                    <tr id="tip_distribution" class="showed" style="display: none;">
+                        <th class="showed">Distribution fair?</th>
+                        <th class="showed">
+                            <select name="fair">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>
+                            
+                        </th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>Atmosphere</th>
+                        <th>
+                            <ul class="rate-area">
+                                <input type="radio" id="5-star1" name="atmosphere" value="5" /><label for="5-star1" title="Amazing">5 stars</label>
+                                <input type="radio" id="4-star1" name="atmosphere" value="4" /><label for="4-star1" title="Good">4 stars</label>
+                                <input type="radio" id="3-star1" name="atmosphere" value="3" /><label for="3-star1" title="Average">3 stars</label>
+                                <input type="radio" id="2-star1" name="atmosphere" value="2" /><label for="2-star1" title="Not Good">2 stars</label>
+                                <input type="radio" id="1-star1" name="atmosphere" value="1" /><label for="1-star1" title="Bad">1 star</label>
+                            </ul>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Team</th>
+                        <th>
+                            <ul class="rate-area">
+                                <input type="radio" id="5-star2" name="team" value="5" /><label for="5-star2" title="Amazing">5 stars</label>
+                                <input type="radio" id="4-star2" name="team" value="4" /><label for="4-star2" title="Good">4 stars</label>
+                                <input type="radio" id="3-star2" name="team" value="3" /><label for="3-star2" title="Average">3 stars</label>
+                                <input type="radio" id="2-star2" name="team" value="2" /><label for="2-star2" title="Not Good">2 stars</label>
+                                <input type="radio" id="1-star2" name="team" value="1" /><label for="1-star2" title="Bad">1 star</label>
+                            </ul>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Communication</th>
+                        <th>
+                            <ul class="rate-area">
+                                <input type="radio" id="5-star3" name="communication" value="5" /><label for="5-star3" title="Amazing">5 stars</label>
+                                <input type="radio" id="4-star3" name="communication" value="4" /><label for="4-star3" title="Good">4 stars</label>
+                                <input type="radio" id="3-star3" name="communication" value="3" /><label for="3-star3" title="Average">3 stars</label>
+                                <input type="radio" id="2-star3" name="communication" value="2" /><label for="2-star3" title="Not Good">2 stars</label>
+                                <input type="radio" id="1-star3" name="communication" value="1" /><label for="1-star3" title="Bad">1 star</label>
+                            </ul>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Management</th>
+                        <th>
+                            <ul class="rate-area">
+                                <input type="radio" id="5-star4" name="management" value="5" /><label for="5-star4" title="Amazing">5 stars</label>
+                                <input type="radio" id="4-star4" name="management" value="4" /><label for="4-star4" title="Good">4 stars</label>
+                                <input type="radio" id="3-star4" name="management" value="3" /><label for="3-star4" title="Average">3 stars</label>
+                                <input type="radio" id="2-star4" name="management" value="2" /><label for="2-star4" title="Not Good">2 stars</label>
+                                <input type="radio" id="1-star4" name="management" value="1" /><label for="1-star4" title="Bad">1 star</label>
+                            </ul>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Guests</th>
+                        <th>
+                            <ul class="rate-area">
+                                <input type="radio" id="5-star5" name="guests" value="5" /><label for="5-star5" title="Amazing">5 stars</label>
+                                <input type="radio" id="4-star5" name="guests" value="4" /><label for="4-star5" title="Good">4 stars</label>
+                                <input type="radio" id="3-star5" name="guests" value="3" /><label for="3-star5" title="Average">3 stars</label>
+                                <input type="radio" id="2-star5" name="guests" value="2" /><label for="2-star5" title="Not Good">2 stars</label>
+                                <input type="radio" id="1-star5" name="guests" value="1" /><label for="1-star5" title="Bad">1 star</label>
+                            </ul>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>
+                            
+                        </th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>Overall</th>
+                        <th>
+                            <ul class="rate-area">
+                                <input type="radio" id="5-star6" name="overall" value="5" /><label for="5-star6" title="Amazing">5 stars</label>
+                                <input type="radio" id="4-star6" name="overall" value="4" /><label for="4-star6" title="Good">4 stars</label>
+                                <input type="radio" id="3-star6" name="overall" value="3" /><label for="3-star6" title="Average">3 stars</label>
+                                <input type="radio" id="2-star6" name="overall" value="2" /><label for="2-star6" title="Not Good">2 stars</label>
+                                <input type="radio" id="1-star6" name="overall" value="1" /><label for="1-star6" title="Bad">1 star</label>
+                            </ul>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>
+                            <button class="input3" id="submit-rate" type="submit">Submit</button>
+                        </th>
+                        <th></th>
+                    </tr>
+                </tbody>
+            </table>
+    
+        </form>
+    </div>
+{% endblock %}

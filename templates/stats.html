@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    User Stats
+{% endblock %}
+
+{% block main %}
+<aside>
+    <ul class="profil_menu">
+        <li class="profil_item"><a href="/stats">User</a></li>
+        <li class="profil_item"><a href="/employerstats">Employer</a></li>
+        <li class="profil_item"><a href="/jobstats">Jobs</a></li>
+    </ul>
+</aside>
+<div class="profil_layout">
+    <div class="table_container">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Registrated User</th>
+                    <th>{{ amount_user }}</th>
+                </tr>
+                <tr>
+                    <th>Ratio of Gender</th>
+                    <th><canvas id="myChart" style="width:100%; max-width: 400px"></canvas></th>
+                    <script>
+                        piechart("myChart", {{ gender2|tojson }}, {{ gender1|tojson }});
+                    </script>              
+                </tr>
+                <tr>
+                    <th>Average Age</th>
+                    <th>{{ average_age }}</th>
+                </tr>
+                <tr>
+                    <th>Age Distribution</th>
+                    <th><canvas id="myChart2" style="width:100%; max-width: 400px"></canvas></th>
+                    <script>
+                        piechart("myChart2", {{ ages|tojson }}, {{ birthdays|tojson }});
+                    </script> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Employer
+{% endblock %}
+
+{% block main %}
+<aside>
+    <ul class="profil_menu">
+        <li class="profil_item"><a href="/profil">Overview</a></li>
+        <li class="profil_item"><a href="/addjob">Add Job</a></li>
+        <li class="profil_item"><a href="/addemployer">Add Employer</a></li>
+        <li class="profil_item"><a href="/history">History</a></li>
+    </ul>
+</aside>
+<div class="profil_layout">
+    <div class="table_container">
+        <h3>
+            Add an Employer
+        </h3>
+        <form action="/addemployer" method="post">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th><input class="input1" name="employer_name" type="text" required></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Type of Gastronomy</th>
+                        <th>
+                            <select class="input1" name="gastro_type" required>
+                                <option value="Restaurant">Restaurant</option>
+                                <option value="Bar">Bar</option>
+                                <option value="Canteen">Canteen</option>
+                                <option value="Beer Garden">Beer Garden</option>
+                            </select>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>City</th>
+                        <th><input class="input1" name="city" type="text" placeholder="Köln" required></th>
+                    </tr>
+                    <tr>
+                        <th>Neighbourhood</th>
+                        <th><input class="input1" name="neighbourhood" type="text" placeholder="Altstadt Süd" required></th>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <th><input class="input1" name="address" type="text" placeholder="Gastrostraße 1"></th>
+                    </tr>
+                    <tr>
+                        <th>Homepage</th>
+                        <th><input class="input1" name="homepage" type="url" placeholder="https://www.gastrob.com/"></th>
+                    </tr>
+                    <tr>
+                        <th>Mail</th>
+                        <th><input class="input1" name="mail" type="email" placeholder="service@gastrob.com"></th>
+                    </tr>
+                    <tr>
+                        <th>Number</th>
+                        <th><input class="input1" name="number" type="tel" placeholder="0221-123456"></th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th><button class="input3" type="submit">Submit</button></th>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+{% endblock %}

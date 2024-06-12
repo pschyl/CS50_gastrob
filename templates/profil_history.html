@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <aside>
+        <ul class="profil_menu">
+            <li class="profil_item"><a href="/profil">Overview</a></li>
+            <li class="profil_item"><a href="/addjob">Add Job</a></li>
+            <li class="profil_item"><a href="/addemployer">Add Employer</a></li>
+            <li class="profil_item"><a href="/history">History</a></li>
+        </ul>
+    </aside>
+    <div class="profil_layout">
+        <h3>Latest Ratings</h3>
+        <table class="table">
+            <thead class="tablehead">
+                <tr>
+                    <th>Job</th>
+                    <th>Overtime</th>
+                    <th>Tip</th>
+                    <th>Atmosphere</th>
+                    <th>Team</th>
+                    <th>Communcation</th>
+                    <th>Management</th>
+                    <th>Guests</th>
+                    <th>Overall</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rating in ratings %}
+                <tr>
+                    <th>{{ rating[0] }}</th>
+                    <th>{{ rating[1] }}</th>
+                    <th>{{ rating[2] }}</th>
+                    <th>{{ rating[3] }}</th>
+                    <th>{{ rating[4] }}</th>
+                    <th>{{ rating[5] }}</th>
+                    <th>{{ rating[6] }}</th>
+                    <th>{{ rating[7] }}</th>
+                    <th>{{ rating[8] }}</th>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+    </div>
+    
+{% endblock %}

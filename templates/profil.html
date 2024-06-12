@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block main %}
+    <aside>
+        <ul class="profil_menu">
+            <li class="profil_item"><a href="/profil">Overview</a></li>
+            <li class="profil_item"><a href="/addjob">Add Job</a></li>
+            <li class="profil_item"><a href="/addemployer">Add Employer</a></li>
+            <li class="profil_item"><a href="/history">History</a></li>
+        </ul>
+    </aside>
+    <div class="profil_layout">
+        <div class="table_container">
+            <h3>Your Profile</h3>
+            <table class="table">
+                <tbody>
+                    <form action="profil" method="post">
+                        <tr>
+                            <th>Username</th>
+                            <th>{{ username }}</th>
+                        </tr>
+
+                        {% if age == none %}
+                        <tr>
+                            <th>Year of Birth</th>
+                            <th><input class="input1" name="year_birth" type="number" required></th>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <th>Age</th>
+                            <th>{{ age }}</th>
+                        </tr>
+                        {% endif %}
+
+                        {% if gender == none %}
+                        <tr>
+                            <th>Gender</th>
+                            <th><select class="input1" name="gender" required><option value="female">female</option><option value="male">male</option><option value="non-binary">non-binary</option></select></th>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <th>Gender</th>
+                            <th>{{ gender }}</th>
+                        </tr>
+                        {% endif %}
+
+                        <tr>
+                            <th>Experience</th>
+                            <th>{{ experience }}</th>
+                        </tr>
+
+                        {% if gender == none or age == none %}
+                        <tr>
+                            <th></th>
+                            <th><button class="input3">Edit</button></th>
+                        </tr>
+                        {% else %}
+                        {% endif %}
+                    </form>    
+                </tbody>
+            </table>
+        </div>
+        <div class="table_container">
+            <h3>Curriculum Vitae</h3>
+            <table class="table">
+                <thead class="tablehead">
+                    <tr>
+                        <th>Employer</th>
+                        <th>Position</th>
+                        <th>Employment Type</th>
+                        <th>Responsibility</th>
+                        <th>Salary per Month</th>
+                        <th>Start</th>
+                        <th>End</th> 
+                        <!-- TODO: possibility to set Enddate -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in cv %}
+                    <tr>
+                        <th>{{ job[0] }}</th>
+                        <th>{{ job[1] }}</th>
+                        <th>{{ job[2] }}</th>
+                        <th>{{ job[3] }}</th>
+                        <th>{{ job[4] }}</th>
+                        <th>{{ job[5] }}</th>
+                        <th>{{ job[6] }}</th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+{% endblock %}
