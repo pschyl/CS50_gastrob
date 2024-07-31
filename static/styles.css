@@ -139,6 +139,23 @@ a{
     color: black;
 }
 
+.register_form {
+    padding: 20px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_register_switch {
+    margin-top: 10px;
+    font-size: x-small;
+}
+
+.register_form a {
+    color: blue;
+}
+
 .table_container{
     margin-bottom: 30px;
 }
@@ -252,6 +269,11 @@ h3{
     margin-top: 60px;
 }
 
+.browse_form {
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
 #addlink{
     width: 100px;
     font-style: italic;
@@ -280,4 +302,56 @@ h3{
 
 .tablehead{
     border-bottom: #000;
+}
+
+.browse_content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 50px;
+    align-items: center;
+}
+
+.browse_container {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.info {
+    padding: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    width: fit-content;
+}
+
+.rating tr,th {
+    padding: 10px;
+    min-width: 200px;
+    align-content: center;
+}
+
+.first_col {
+    text-align: left;
+}
+
+.rating table {
+    text-align: center;
+}
+
+.browse_container_2 {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 50px;
+}
+
+#browse_button {
+    height: 30px;
+    background-color: rgba(74, 174, 74, 0.616);
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.input1 {
+    margin-top: 10px;
+    height: 30px;
 }

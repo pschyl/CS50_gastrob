@@ -163,9 +163,126 @@ def rate():
         return render_template("rate.html", jobs=jobs)
 
 
-@app.route("/browse")
+@app.route("/browse", methods=["GET", "POST"])
 def browse():
-    return render_template("browse.html")
+
+    rows1 = db.execute("SELECT name FROM employer;")
+    employer = rows1.fetchall()
+
+    if request.method == "GET":
+        return render_template("browse.html", render_option = 1, employer = employer)
+    
+    else:
+        search_input = request.form.get("browse")
+
+        rows2 = db.execute("SELECT * FROM employer WHERE name = ?",(search_input,)).fetchall()
+        employer_id = rows2[0][0]
+        address = rows2[0][3]
+        city = rows2[0][2]
+        homepage = rows2[0][6]
+        number = rows2[0][8]
+
+        rows3 = db.execute("SELECT * FROM jobs INNER JOIN ratings ON jobs.id = ratings.job_id WHERE jobs.employer_id = ?", (employer_id,)) 
+        data = rows3.fetchall()
+
+        if len(data) == 0:
+            return render_template("browse.html", render_option = 2, employer = employer)
+
+        sum_ratings = 0
+
+        sum_atmosphere = 0
+        sum_team = 0
+        sum_communicaton = 0
+        sum_management = 0
+        sum_guests = 0
+        sum_overall = 0
+        sum_salary_service = 0
+        sum_salary_kitchen = 0
+        sum_overtime_service = 0
+        sum_overtime_kitchen = 0
+        sum_tip_service = 0
+        sum_tip_kitchen = 0
+        sum_paid_service = [0,0]
+        sum_paid_kitchen = [0,0]
+        sum_distribution_service = [0,0]
+        sum_distribution_kitchen = [0,0]
+        y_n = ["Yes", "No"]
+        types = ["Part Time", "Full Time", "Student", "Minijob"]
+        amount_types = [0,0,0,0]
+        positions = ["Allrounder", "Barkeeper", "Chef", "Waitor"]
+        amount_positions = [0,0,0,0]
+        responsibility = [0,0]
+
+        for rating in data:
+            sum_ratings += 1
+            sum_atmosphere += rating[-6]
+            sum_team += rating[-5]
+            sum_communicaton += rating[-4]
+            sum_management += rating[-3]
+            sum_guests += rating[-2]
+            sum_overall += rating[-1]
+
+            if rating[3] == "Part_time":
+                amount_types[0] += 1
+            elif rating[3] == "Full_time":
+                amount_types[1] += 1
+            elif rating[3] == "Student":
+                amount_types[2] += 1
+            elif rating[3] == "Minijob":
+                amount_types[3] += 1
+
+            if rating[6] == "Allrounder":
+                amount_positions[0] += 1
+            elif rating[6] == "Barkeeper":
+                amount_positions[1] += 1
+            elif rating[6] == "Chef":
+                amount_positions[2] += 1
+            elif rating[6] == "Waitor":
+                amount_positions[3] += 1
+
+            if rating[4] == y_n[0]:
+                responsibility[0] += 1
+            elif rating[4] == y_n[1]:
+                responsibility[1] += 1
+
+            if rating[5] == "Service":
+                sum_salary_service += rating[7]
+                sum_overtime_service += rating[-10]
+                sum_tip_service += rating[-8]
+                if rating[-9] == "Yes":
+                    sum_paid_service[0] += 1
+                elif rating[-9] == "No":
+                    sum_paid_service[1] += 1
+                if rating[-7] == "Yes":
+                    sum_distribution_service[0] += 1
+                elif rating[-7] == "No":
+                    sum_distribution_service[1] += 1
+
+            elif rating[5] == "Kitchen":
+                sum_salary_kitchen += rating[7]
+                sum_overtime_kitchen += rating[-10]
+                sum_tip_kitchen += rating[-8]
+                if rating[-9] == "Yes":
+                    sum_paid_kitchen[0] += 1
+                elif rating[-9] == "No":
+                    sum_paid_kitchen[1] += 1
+                if rating[-7] == "Yes":
+                    sum_distribution_kitchen[0] += 1
+                elif rating[-7] == "No":
+                    sum_distribution_kitchen[1] += 1
+
+
+        return render_template("browse.html", render_option = 3, employer = employer, name = search_input,
+                               address = address, city = city, homepage = homepage, number = number, sum_ratings = sum_ratings, 
+                               atmosphere = round(sum_atmosphere/sum_ratings, 1), team = round(sum_team/sum_ratings, 1),
+                               communication = round(sum_communicaton/sum_ratings, 1), management = round(sum_management/sum_ratings, 1),
+                               guests = round(sum_guests/sum_ratings, 1), overall = round(sum_overall/sum_ratings,1), 
+                               salary_kitchen = round(sum_salary_kitchen/sum_ratings, 1), salary_service = round(sum_salary_service/sum_ratings, 1), 
+                               overtime_kitchen = round(sum_overtime_kitchen/sum_ratings, 1), overtime_service = round(sum_overtime_service/sum_ratings, 1), 
+                               tip_kitchen = round(sum_tip_kitchen/sum_ratings, 1), tip_service = round(sum_tip_service/sum_ratings, 1), 
+                               y_n = y_n, sum_paid_service = sum_paid_service, sum_distribution_service = sum_distribution_service, 
+                               sum_paid_kitchen = sum_paid_kitchen, sum_distribution_kitchen = sum_distribution_kitchen, 
+                               types = types, amount_types = amount_types, positions = positions, amount_positions = amount_positions, responsibility = responsibility)
 
 
 @app.route("/addemployer", methods=["GET", "POST"])
@@ -351,8 +468,8 @@ def job_stats():
     jobs1 = db.execute("SELECT COUNT(*) FROM jobs")
     registrated_jobs = jobs1.fetchone()[0]
 
-    jobs1 = db.execute("SELECT COUNT(*) FROM jobs WHERE end = ''")
-    active_jobs = jobs1.fetchone()[0]
+    jobs2 = db.execute("SELECT COUNT(*) FROM jobs WHERE end = ''")
+    active_jobs = jobs2.fetchone()[0]
 
     jobs3 = db.execute("SELECT position, COUNT(*) FROM jobs GROUP BY position;")
     job_positions = jobs3.fetchall()
@@ -370,4 +487,25 @@ def job_stats():
         emp_types.append(job_types[i][0])
         amount_types.append(job_types[i][1])
 
-    return render_template("stats_jobs.html", registrated_jobs=registrated_jobs, active_jobs=active_jobs, positions=positions, amount_position=amount_position, emp_types=emp_types, amount_types=amount_types)
+    jobs5 = db.execute("SELECT COUNT(*) FROM jobs WHERE responsibility = 'Yes'")
+    jobs_with_responsibility = jobs5.fetchone()[0]
+    quota_responsibility = round(jobs_with_responsibility/registrated_jobs, 2)
+
+    jobs6 = db.execute("SELECT SUM(salary) FROM jobs WHERE end = '';")
+    sum_salary_active = jobs6.fetchone()[0]
+    average_salary_active = round(sum_salary_active/active_jobs, 2)
+
+    jobs7 = db.execute("SELECT SUM(ratings.overtime) FROM ratings INNER JOIN jobs ON jobs.id = ratings.job_id WHERE jobs.end = '';")
+    sum_overtime_active = jobs7.fetchone()[0]
+    average_overtime_active = round(sum_overtime_active/active_jobs, 2)
+
+    jobs8 = db.execute("SELECT SUM(ratings.tip) FROM ratings INNER JOIN jobs ON jobs.id = ratings.job_id WHERE jobs.end = '';")
+    sum_tip_active = jobs8.fetchone()[0]
+    average_tip_active = round(sum_tip_active/active_jobs, 2)
+
+
+    return render_template("stats_jobs.html", registrated_jobs=registrated_jobs, 
+                           active_jobs=active_jobs, positions=positions, amount_position=amount_position, 
+                           emp_types=emp_types, amount_types=amount_types, quota_responsibility = quota_responsibility,
+                           average_salary_active = average_salary_active, average_overtime_active = average_overtime_active,
+                           average_tip_active = average_tip_active)

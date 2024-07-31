@@ -5,11 +5,149 @@
 {% endblock %}
 
 {% block main %}
-    <div class="register_form">
+    <div class="browse_form">
         <h4 class="register">Browse for Employer</h4>
         <form class="register" action="/browse" method="post">
-            <input class="input2" type="text" name="browse">
-            <button id="browse" class="input2">Browse</button>
+            <select class="input1" name="browse" placeholder="Employer" required>
+                {% for row in employer %}
+                <option value="{{ row[0] }}">{{ row[0] }}</option>
+                {% endfor %}
+            <input id="browse_button" type="submit" value="Browse"/>
         </form>
+    </div>
+    <div class="browse_content">
+        {% if render_option == 2 %}
+        <div>No data found</div>
+        {% endif %}
+        {% if render_option == 3 %}
+        <div class="browse_container">
+            <div class="browse_container_2">
+                {% if render_option > 1 %}
+                <div class="info">
+                    <h4>Employer</h4>
+                    <table>
+                        <tbody>
+                            <tr><th>{{ name }}</th></tr>
+                            <tr><th>{{ address }}, {{ city }}</th></tr>
+                            <tr><th><a href="{{ homepage }}">{{ homepage }}</a></th></tr>
+                            <tr><th>{{ number }}</th></tr>
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+                <div class="rating">
+                    <h4>Average Rating</h4>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="first_col">Atmosphere</th>
+                                <th>{{ atmosphere }}</th>
+                            </tr>
+                            <tr>
+                                <th class="first_col">Team</th>
+                                <th>{{ team }}</th>
+                            </tr>
+                            <tr>
+                                <th class="first_col">Communication</th>
+                                <th>{{ communication }}</th>
+                            </tr>
+                            <tr>
+                                <th class="first_col">Management</th>
+                                <th>{{ management }}</th>
+                            </tr>
+                            <tr>
+                                <th class="first_col">Guests</th>
+                                <th>{{ guests }}</th>
+                            </tr>
+                            <tr>
+                                <th class="first_col">Overall</th>
+                                <th>{{ overall }}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="rating">
+                <h4>Employee Distribution of Ratings</h4>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Types</th>
+                            <th><canvas id="myChart10" style="width:100%; max-width: 400px"></canvas></th>
+                            <script>
+                                piechart("myChart10", {{ types|tojson }}, {{ amount_types|tojson }});
+                            </script>
+                        </tr>
+                        <tr>
+                            <th>Positions</th>
+                            <th><canvas id="myChart11" style="width:100%; max-width: 400px"></canvas></th>
+                            <script>
+                                piechart("myChart11", {{ positions|tojson }}, {{ amount_positions|tojson }});
+                            </script>
+                        </tr>
+                        <tr>
+                            <th>Responsibility</th>
+                            <th><canvas id="myChart12" style="width:100%; max-width: 400px"></canvas></th>
+                            <script>
+                                piechart("myChart12", {{ y_n|tojson }}, {{ responsibility|tojson }});
+                            </script>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="rating">
+            <h4>More Numbers</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Service</th>
+                        <th>Kitchen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="first_col">Average Salary</th>
+                        <th>{{ salary_service }}</th>
+                        <th>{{ salary_kitchen }}</th>
+                    </tr>
+                    <tr>
+                        <th class="first_col">Average Overtime</th>
+                        <th>{{ overtime_service }}</th>
+                        <th>{{ overtime_kitchen }}</th>
+                    </tr>
+                    <tr>
+                        <th class="first_col">Reliably paid</th>
+                        <th><canvas id="myChart6" style="width:100%; max-width: 400px"></canvas></th>
+                            <script>
+                                piechart("myChart6", {{ y_n|tojson }}, {{ sum_paid_service|tojson }});
+                            </script>  
+                        <th><canvas id="myChart7" style="width:100%; max-width: 400px"></canvas></th>
+                            <script>
+                                piechart("myChart7", {{ y_n|tojson }}, {{ sum_paid_kitchen|tojson }});
+                            </script>  
+                    </tr>
+                    <tr>
+                        <th class="first_col">Average Tip</th>
+                        <th>{{ tip_service }}</th>
+                        <th>{{ tip_kitchen }}</th>
+                    </tr>
+                    <tr>
+                        <th class="first_col">Distribution fair</th>
+                        <th><canvas id="myChart8" style="width:100%; max-width: 400px"></canvas></th>
+                            <script>
+                                piechart("myChart8", {{ y_n|tojson }}, {{ sum_distribution_service|tojson }});
+                            </script>  
+                        <th><canvas id="myChart9" style="width:100%; max-width: 400px"></canvas></th>
+                            <script>
+                                piechart("myChart9", {{ y_n|tojson }}, {{ sum_distribution_kitchen|tojson }});
+                            </script>  
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>Based on {{ sum_ratings }} ratings</div>
+        {% endif %}
     </div>
 {% endblock %}
